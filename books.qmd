@@ -1,6 +1,5 @@
 ---
 title: "HTML and JSON"
-subtitle: "DATA 607 - Working with HTML and JSON"
 author: "Mohd Afwan Shaikh"
 format:
   html:
