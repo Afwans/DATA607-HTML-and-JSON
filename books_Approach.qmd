@@ -1,0 +1,43 @@
+---
+title: "DATA 607 – Working with HTML and JSON"
+subtitle: "Approach Document"
+author: "Mohd Afwan Shaikh"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 2
+    number-sections: false
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Project Overview
+
+For this assignment, I selected three books related to Data Science. My goal is to understand how the same information can be stored in different formats, such as HTML and JSON, and how to import and compare that information using R.
+
+## Selected Books
+
+1.  **R for Data Science (2nd Edition)** – Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund.
+2.  **An Introduction to Statistical Learning (2nd Edition)** – Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani.
+3.  **Python for Data Analysis (3rd Edition)** – Wes McKinney.
+
+For each book, I will include five attributes: title, authors, publication year, publisher, and subject.
+
+## My Approach
+
+First, I will manually create an HTML file (`books.html`) containing a table with the three books and their information.
+
+Next, I will create a JSON file (`books.json`) containing the same information using JSON objects and key-value pairs.
+
+After creating both files, I will use RStudio to load them into two separate data frames. I will use the `rvest` package to read the HTML table and the `jsonlite` package to read the JSON file.
+
+I will then compare the two data frames using the `identical()` function in R to check whether they contain the same information.
+
+Finally, I will document my code, results, and observations in a Quarto report and publish it to RPubs. I will also make the HTML and JSON files publicly accessible online.
+
+## Expected Results
+
+I expect both files to produce identical data frames because they contain the same book information. This assignment will help me better understand how to work with HTML and JSON data and how to import and compare different data formats using R.
