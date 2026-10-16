@@ -1,0 +1,115 @@
+---
+title: "HTML and JSON"
+subtitle: "DATA 607 - Working with HTML and JSON"
+author: "Mohd Afwan Shaikh"
+format:
+  html:
+    toc: true
+    theme: cosmo
+    code-fold: false
+output-file: books_report.html
+execute:
+  warning: false
+  message: false
+---
+
+## Introduction
+
+The purpose of this assignment is to practice working with HTML and JSON data formats in R. I manually created two files containing information about three books related to data science.
+
+Each file contains the same five attributes: title, authors, publication year, publisher, and subject. I will load both files into separate R data frames and compare them to determine whether they are identical.
+
+## Load Required Packages
+
+I used the `rvest` package to read HTML, the `jsonlite` package to read JSON, and the `knitr` package to display the data in tables.
+
+```{r}
+library(rvest)
+library(jsonlite)
+library(knitr)
+```
+
+## Load HTML Data
+
+The HTML file contains a table with information about three data science books. I used the `rvest` package to extract the table and convert it into a data frame.
+
+```{r}
+html_data <- read_html("books.html") |>
+  html_element("table") |>
+  html_table() |>
+  as.data.frame()
+
+kable(html_data, caption = "Books Loaded from HTML")
+```
+
+## Load JSON Data
+
+The JSON file contains the same book information. I used the `jsonlite` package to import the data into a separate data frame.
+
+```{r}
+json_data <- fromJSON("books.json") |>
+  as.data.frame()
+
+kable(json_data, caption = "Books Loaded from JSON")
+```
+
+## Compare the Data Frames
+
+Before comparing the data frames, I checked their column names and data types to make sure they were consistent.
+
+```{r}
+names(html_data)
+names(json_data)
+
+str(html_data)
+str(json_data)
+```
+
+### Data Cleaning
+
+I noticed that the HTML file used a curly apostrophe in "O’Reilly Media," while the JSON file used a straight apostrophe in "O'Reilly Media."
+
+Although both names look similar, R treats these characters differently. I standardized the apostrophes in the HTML data to make the values consistent.
+
+```{r}
+html_data$Publisher <- gsub(
+  "\u2019",
+  "'",
+  html_data$Publisher,
+  fixed = TRUE
+)
+```
+
+### Comparing the Data Frames
+
+After cleaning the data, I arranged the columns in the same order and used the `identical()` function to compare the two data frames.
+
+```{r}
+json_data <- json_data[, names(html_data), drop = FALSE]
+
+comparison <- identical(html_data, json_data)
+
+comparison
+```
+
+## Results
+
+```{r}
+if (comparison) {
+  cat("Result: TRUE - Both data frames are identical.")
+} else {
+  cat("Result: FALSE - The data frames are not identical.")
+}
+```
+
+The comparison returned `TRUE`, confirming that both data frames contain the same information after standardizing the apostrophes.
+
+## Conclusion
+
+This assignment demonstrated how HTML and JSON can represent the same information using different structures.
+
+HTML organizes the book information into a table using rows and columns, while JSON represents the same information using objects and key-value pairs.
+
+Using R, I imported both files into separate data frames and compared their contents. The comparison returned `TRUE`, confirming that the two data frames are identical after standardizing the publisher names.
+
+This exercise helped me understand how to work with different data formats, identify small differences in text values, and prepare data for further analysis.
